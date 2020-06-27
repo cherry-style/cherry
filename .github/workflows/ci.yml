@@ -26,7 +26,22 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: git fetch --no-tags --prune --depth=5 origin master
-      - run: yarn install --frozen-lockfile
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Cache yarn cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install project dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+
       - run: yarn affected:build --base=origin/master
       - run: yarn affected:lint --base=origin/master
       - run: yarn affected:test --base=origin/master
