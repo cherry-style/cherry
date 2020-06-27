@@ -1,0 +1,40 @@
+{
+  "npmScope": "cherry",
+  "implicitDependencies": {
+    "workspace.json": "*",
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/nx-cloud",
+      "options": {
+        "accessToken": "YmE2ZTdkMTEtZmJhNS00YzYyLThkYmEtZWU3ZTNkZDBlOTU4fHJlYWQ=",
+        "cacheableOperations": [
+          "build",
+          "test",
+          "lint",
+          "e2e"
+        ],
+        "canTrackAnalytics": false,
+        "showUsageWarnings": true
+      }
+    }
+  },
+  "projects": {
+    "cherry.style": {
+      "tags": []
+    },
+    "cherry.style-e2e": {
+      "tags": [],
+      "implicitDependencies": [
+        "cherry.style"
+      ]
+    }
+  }
+}
