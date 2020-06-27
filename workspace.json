@@ -1,17 +1,17 @@
 {
   "version": 1,
   "projects": {
-    "cherry.style": {
-      "root": "apps/cherry.style",
-      "sourceRoot": "apps/cherry.style",
+    "cherry.style-client": {
+      "root": "apps/cherry.style/client",
+      "sourceRoot": "apps/cherry.style/client",
       "projectType": "application",
       "schematics": {},
       "architect": {
         "build": {
           "builder": "@nrwl/next:build",
           "options": {
-            "root": "apps/cherry.style",
-            "outputPath": "dist/apps/cherry.style"
+            "root": "apps/cherry.style/client",
+            "outputPath": "dist/apps/cherry.style/client"
           },
           "configurations": {
             "production": {}
@@ -20,12 +20,12 @@
         "serve": {
           "builder": "@nrwl/next:server",
           "options": {
-            "buildTarget": "cherry.style:build",
+            "buildTarget": "cherry.style-client:build",
             "dev": true
           },
           "configurations": {
             "production": {
-              "buildTarget": "cherry.style:build:production",
+              "buildTarget": "cherry.style-client:build:production",
               "dev": false
             }
           }
@@ -33,7 +33,7 @@
         "export": {
           "builder": "@nrwl/next:export",
           "options": {
-            "buildTarget": "cherry.style:build:production"
+            "buildTarget": "cherry.style-client:build:production"
           }
         },
         "lint": {
@@ -41,37 +41,40 @@
           "options": {
             "linter": "eslint",
             "tsConfig": [
-              "apps/cherry.style/tsconfig.json",
-              "apps/cherry.style/tsconfig.spec.json"
+              "apps/cherry.style/client/tsconfig.json",
+              "apps/cherry.style/client/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/cherry.style/**/*"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/cherry.style/client/**/*"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/cherry.style/jest.config.js",
-            "tsConfig": "apps/cherry.style/tsconfig.spec.json",
+            "jestConfig": "apps/cherry.style/client/jest.config.js",
+            "tsConfig": "apps/cherry.style/client/tsconfig.spec.json",
             "passWithNoTests": true
           }
         }
       }
     },
-    "cherry.style-e2e": {
-      "root": "apps/cherry.style-e2e",
-      "sourceRoot": "apps/cherry.style-e2e/src",
+    "cherry.style-client-e2e": {
+      "root": "apps/cherry.style/client-e2e",
+      "sourceRoot": "apps/cherry.style/client-e2e/src",
       "projectType": "application",
       "architect": {
         "e2e": {
           "builder": "@nrwl/cypress:cypress",
           "options": {
-            "cypressConfig": "apps/cherry.style-e2e/cypress.json",
-            "tsConfig": "apps/cherry.style-e2e/tsconfig.e2e.json",
-            "devServerTarget": "cherry.style:serve"
+            "cypressConfig": "apps/cherry.style/client-e2e/cypress.json",
+            "tsConfig": "apps/cherry.style/client-e2e/tsconfig.e2e.json",
+            "devServerTarget": "cherry.style-client:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "cherry.style:serve:production"
+              "devServerTarget": "cherry.style-client:serve:production"
             }
           }
         },
@@ -79,8 +82,13 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "tsConfig": ["apps/cherry.style-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/cherry.style-e2e/**/*"]
+            "tsConfig": [
+              "apps/cherry.style/client-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/cherry.style/client-e2e/**/*"
+            ]
           }
         }
       }
@@ -150,5 +158,5 @@
       }
     }
   },
-  "defaultProject": "cherry.style"
+  "defaultProject": "cherry.style-client"
 }
