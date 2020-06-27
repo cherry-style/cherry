@@ -17,15 +17,19 @@ jobs:
         node-version: [12.x]
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: git fetch --no-tags --prune --depth=5 origin master
+
+      - name: Fetch master branch
+        run: git fetch --no-tags --prune --depth=5 origin master
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -36,13 +40,19 @@ jobs:
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          restore-keys: ${{ runner.os }}-yarn-
 
       - name: Install project dependencies
         run: yarn install --frozen-lockfile --prefer-offline
 
-      - run: yarn affected:build --base=origin/master
-      - run: yarn affected:lint --base=origin/master
-      - run: yarn affected:test --base=origin/master
-      - run: yarn affected:e2e --base=origin/master
+      - name: Run affected build
+        run: yarn affected:build --base=origin/master
+
+      - name: Run affected lint
+        run: yarn affected:lint --base=origin/master
+
+      - name: Run affected test
+        run: yarn affected:test --base=origin/master
+
+      - name: Run affected e2e test
+        run: yarn affected:e2e --base=origin/master
