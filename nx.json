@@ -15,26 +15,22 @@
       "runner": "@nrwl/nx-cloud",
       "options": {
         "accessToken": "YmE2ZTdkMTEtZmJhNS00YzYyLThkYmEtZWU3ZTNkZDBlOTU4fHJlYWQ=",
-        "cacheableOperations": [
-          "build",
-          "test",
-          "lint",
-          "e2e"
-        ],
+        "cacheableOperations": ["build", "test", "lint", "e2e"],
         "canTrackAnalytics": false,
         "showUsageWarnings": true
       }
     }
   },
   "projects": {
-    "cherry.style": {
+    "cherry.style-client": {
       "tags": []
     },
-    "cherry.style-e2e": {
+    "cherry.style-client-e2e": {
       "tags": [],
-      "implicitDependencies": [
-        "cherry.style"
-      ]
+      "implicitDependencies": ["cherry.style-client"]
+    },
+    "cherry.style-server": {
+      "tags": []
     }
   }
 }

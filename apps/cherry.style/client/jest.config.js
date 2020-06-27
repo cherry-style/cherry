@@ -1,10 +1,10 @@
 module.exports = {
-  name: 'cherry.style',
-  preset: '../../jest.config.js',
+  name: 'cherry.style-client',
+  preset: '../../../jest.config.js',
   transform: {
     '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '@nrwl/react/plugins/jest',
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'html'],
-  coverageDirectory: '../../coverage/apps/cherry.style',
+  coverageDirectory: '../../../coverage/apps/cherry.style/client',
 };
