@@ -9,16 +9,44 @@
   "ignorePatterns": ["**/*"],
   "plugins": ["@typescript-eslint", "@nrwl/nx"],
   "extends": [
-    "eslint:recommended",
+    "airbnb-typescript",
+    "airbnb/hooks",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "prettier",
+    "prettier/react",
     "prettier/@typescript-eslint"
   ],
   "rules": {
-    "@typescript-eslint/explicit-member-accessibility": "off",
+    // overrides에서 typescript code에만 룰을 적용하기 위해 끕니다
+    // https://github.com/typescript-eslint/typescript-eslint/blob/v2.27.0/packages/eslint-plugin/docs/rules/explicit-function-return-type.md#configuring-in-a-mixed-jsts-codebase
     "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/no-parameter-properties": "off",
+    "@typescript-eslint/no-var-requires": "off",
+
+    // nx의 모듈 시스템과 호환되지 않으며, typescript에서 import를 체크하기 때문에 린트에서는 체크하지 않습니다
+    "import/no-extraneous-dependencies": "off",
+    "import/no-unresolved": "off",
+
+    // typescript 3.8의 type only import 문법을 eslint가 지원하지 않아 체크하지 않습니다
+    // https://github.com/benmosher/eslint-plugin-import/issues/645
+    "import/order": "off",
+
+    // 가능하면 Named Export를 선호합니다
+    "import/prefer-default-export": "off",
+
+    // React 컴포넌트를 인식하지 못해 끕니다
+    "jsx-a11y/label-has-associated-control": "off",
+
+    // 멤버 변수는 붙여 쓸 수 있습니다
+    "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
+
+    // HOC 에서 자주 사용하는 표현이므로 허용합니다 (다만, 되도록 사용하지 않습니다)
+    "react/jsx-props-no-spreading": "off",
+
+    // typescript에서 prop 타이핑이 강제되기 때문에 린트에서는 체크하지 않습니다
+    "react/prop-types": "off",
+
     "@nrwl/nx/enforce-module-boundaries": [
       "error",
       {
@@ -32,9 +60,17 @@
   },
   "overrides": [
     {
-      "files": ["*.tsx"],
+      "files": ["*.ts", "*.tsx"],
       "rules": {
-        "@typescript-eslint/no-unused-vars": "off"
+        "@typescript-eslint/explicit-function-return-type": ["warn", { "allowExpressions": true }],
+        "@typescript-eslint/no-var-requires": ["error"]
+      }
+    },
+    {
+      "files": ["*.d.ts"],
+      "rules": {
+        // `/// <reference ...` 와 같은 표현을 허용합니다
+        "spaced-comment": ["error", "always", { "markers": ["/"] }]
       }
     }
   ]
