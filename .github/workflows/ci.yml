@@ -8,7 +8,9 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # Use ubuntu-16.04 because ubuntu-lastest make crashing with cypress.
+    # https://github.com/cypress-io/github-action
+    runs-on: ubuntu-16.04
 
     strategy:
       matrix:
