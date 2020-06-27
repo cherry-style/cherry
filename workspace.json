@@ -21,7 +21,8 @@
           "builder": "@nrwl/next:server",
           "options": {
             "buildTarget": "cherry.style-client:build",
-            "dev": true
+            "dev": true,
+            "proxyConfig": "apps/cherry.style/client/proxy.conf.json"
           },
           "configurations": {
             "production": {
@@ -44,10 +45,7 @@
               "apps/cherry.style/client/tsconfig.json",
               "apps/cherry.style/client/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/cherry.style/client/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/cherry.style/client/**/*"]
           }
         },
         "test": {
@@ -82,13 +80,67 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "tsConfig": [
-              "apps/cherry.style/client-e2e/tsconfig.e2e.json"
-            ],
+            "tsConfig": ["apps/cherry.style/client-e2e/tsconfig.e2e.json"],
             "exclude": [
               "**/node_modules/**",
               "!apps/cherry.style/client-e2e/**/*"
             ]
+          }
+        }
+      }
+    },
+    "cherry.style-server": {
+      "root": "apps/cherry.style/server",
+      "sourceRoot": "apps/cherry.style/server/src",
+      "projectType": "application",
+      "prefix": "cherry.style-server",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/cherry.style/server",
+            "main": "apps/cherry.style/server/src/main.ts",
+            "tsConfig": "apps/cherry.style/server/tsconfig.app.json",
+            "assets": ["apps/cherry.style/server/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/cherry.style/server/src/environments/environment.ts",
+                  "with": "apps/cherry.style/server/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "cherry.style-server:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "apps/cherry.style/server/tsconfig.app.json",
+              "apps/cherry.style/server/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/cherry.style/server/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/cherry.style/server/jest.config.js",
+            "tsConfig": "apps/cherry.style/server/tsconfig.spec.json",
+            "passWithNoTests": true
           }
         }
       }

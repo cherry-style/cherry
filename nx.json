@@ -28,6 +28,9 @@
     "cherry.style-client-e2e": {
       "tags": [],
       "implicitDependencies": ["cherry.style-client"]
+    },
+    "cherry.style-server": {
+      "tags": []
     }
   }
 }
