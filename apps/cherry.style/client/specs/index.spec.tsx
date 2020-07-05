@@ -1,6 +1,5 @@
-import React from 'react';
 import { render } from '@testing-library/react';
-
+import React from 'react';
 import { Index } from '../pages/index';
 
 describe('Index', () => {
@@ -9,8 +8,8 @@ describe('Index', () => {
     expect(baseElement).toBeTruthy();
   });
 
-  it('should have a greeting as the title', () => {
+  it('should have a cherry link', () => {
     const { getByText } = render(<Index />);
-    expect(getByText('Welcome to cherry.style!')).toBeTruthy();
+    expect(getByText('Cherry')).toBeTruthy();
   });
 });
