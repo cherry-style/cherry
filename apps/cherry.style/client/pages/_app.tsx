@@ -1,4 +1,5 @@
 import { css, Global } from '@emotion/core';
+import { motion } from 'framer-motion';
 import { AppProps } from 'next/app';
 import React from 'react';
 
@@ -13,13 +14,17 @@ const App = ({ Component, pageProps }: Props): React.ReactElement => {
           body {
             width: 100%;
             height: 100%;
+            margin: 0;
+            padding: 0;
           }
 
-          body {
+          div {
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #aa0a27;
+
+            height: 100%;
+            width: 100%;
           }
 
           a {
@@ -28,7 +33,18 @@ const App = ({ Component, pageProps }: Props): React.ReactElement => {
           }
         `}
       />
-      <Component {...pageProps} />
+      <motion.div
+        initial={{ backgroundColor: '#aa0a27', y: '-100%' }}
+        animate={{ y: 0 }}
+        transition={{
+          type: 'spring',
+          delay: 0,
+          stiffness: 200,
+          damping: 50,
+        }}
+      >
+        <Component {...pageProps} />
+      </motion.div>
     </>
   );
 };
